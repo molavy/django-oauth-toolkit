@@ -58,20 +58,20 @@ class AbstractApplication(models.Model):
     )
 
     client_id = models.CharField(max_length=100, unique=True,
-                                 default=generate_client_id, db_index=True)
+                                 default=generate_client_id, db_index=True,verbose_name=_("Client Id"))
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="%(app_label)s_%(class)s",
-                             null=True, blank=True)
+                             null=True, blank=True,verbose_name=_("User"))
 
     help_text = _("Allowed URIs list, space separated")
     redirect_uris = models.TextField(help_text=help_text,
-                                     validators=[validate_uris], blank=True)
-    client_type = models.CharField(max_length=32, choices=CLIENT_TYPES)
+                                     validators=[validate_uris], blank=True,verbose_name=_("Redirect URIs"))
+    client_type = models.CharField(max_length=32, choices=CLIENT_TYPES,verbose_name=_("Client Type"))
     authorization_grant_type = models.CharField(max_length=32,
-                                                choices=GRANT_TYPES)
+                                                choices=GRANT_TYPES,verbose_name=_("Authorization grant type"))
     client_secret = models.CharField(max_length=255, blank=True,
-                                     default=generate_client_secret, db_index=True)
-    name = models.CharField(max_length=255, blank=True)
-    skip_authorization = models.BooleanField(default=False)
+                                     default=generate_client_secret, db_index=True,verbose_name=_("Client secret"))
+    name = models.CharField(max_length=255, blank=True),verbose_name=_("Name")
+    skip_authorization = models.BooleanField(default=False,verbose_name=_("Skip authorization"))
 
     class Meta:
         abstract = True
